@@ -1,118 +1,146 @@
 // src/components/Homepage.js
-import React from 'react';
-import { Box, Typography, Button, Grid, Container } from '@mui/material';
+import React, { useRef } from 'react';
+import { 
+  Box, Typography, Button, Grid, Container, Paper, TextField 
+} from '@mui/material';
 import { Link } from 'react-router-dom';
+import { FaRegComments, FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
+import FeatureCard from './FeatureCard';
+import styles from './Homepage.module.css'; // Import CSS module
+
+const features = [
+  { title: 'Your Works', desc: 'Track tools and history.' },
+  { title: 'ToDo & Mind Mapping', desc: 'Organize tasks visually.' },
+  { title: 'Habit Tracking', desc: 'Track habits effectively.' },
+  { title: 'Community', desc: 'Engage and share with others.' },
+  { title: 'Progress', desc: 'Monitor productivity milestones.' },
+  { title: 'Sessions & Collaborations', desc: 'Study with peers.' },
+];
+
+const testimonials = [
+  { name: 'Alice Smith', feedback: 'This app changed the way I manage my tasks!' },
+  { name: 'John Doe', feedback: 'Simple and effective habit tracking.' },
+  { name: 'Sarah Lee', feedback: 'The collaboration feature is a game-changer.' },
+];
+
+const faqItems = [
+  { question: 'How do I track my habits?', answer: 'Use the Habit Tracking section to log your daily progress.' },
+  { question: 'Can I collaborate with others?', answer: 'Yes, you can create sessions to study or collaborate with your peers.' },
+  { question: 'Is this app free?', answer: 'Yes, all core features are available for free.' },
+];
 
 const Homepage = () => {
+  const featuresRef = useRef(null);
+
+  const handleExploreFeatures = () => {
+    featuresRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
       {/* Hero Section */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '80vh',
-          background: 'linear-gradient(145deg, #f3f5ff, #e2e6ff)',
-          textAlign: 'center',
-          flexDirection: 'column',
-          padding: '0 20px',
-        }}
-      >
-        <Typography
-          variant="h2"
-          sx={{ fontWeight: 'bold', marginBottom: 2, color: '#3a3a3a' }}
-        >
+      <Box className={styles.heroSection}>
+        <Typography variant="h2" className={styles.heroTitle}>
           Welcome to Your Productivity Hub
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{ color: '#555', marginBottom: 4, maxWidth: '600px' }}
-        >
-          Manage your tasks, track habits, collaborate effortlessly, and achieve
-          your goals all in one place.
+        <Typography variant="h6" className={styles.heroSubtitle}>
+          Manage tasks, track habits, collaborate effortlessly, and achieve your goals in one place.
         </Typography>
-        <Link to="/register" style={{ textDecoration: 'none' }}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#6c63ff',
-              color: '#fff',
-              padding: '10px 20px',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-              '&:hover': { backgroundColor: '#5a54e8' },
-            }}
-          >
-            Get Started
-          </Button>
-        </Link>
+        <Button 
+          variant="contained" 
+          onClick={handleExploreFeatures} 
+          className={styles.exploreButton}
+        >
+          Explore Features
+        </Button>
       </Box>
 
-      {/* Feature Highlights */}
-      <Container maxWidth="lg" sx={{ padding: '50px 0' }}>
-        <Typography
-          variant="h4"
-          align="center"
-          sx={{ fontWeight: 600, marginBottom: 4 }}
-        >
-          Explore Our Features
+      {/* Discover Section */}
+      <Box className={styles.discoverSection}>
+        <Typography variant="h4" className={styles.discoverTitle}>
+          Discover All Our Tools and Features
         </Typography>
         <Grid container spacing={4} justifyContent="center">
-          {[
-            { title: 'Your Works', desc: 'Track tools and history.' },
-            { title: 'ToDo & Mind Mapping', desc: 'Organize tasks visually.' },
-            { title: 'Habit Tracking', desc: 'Track habits effectively.' },
-            { title: 'Community', desc: 'Engage and share with others.' },
-            { title: 'Progress', desc: 'Monitor productivity milestones.' },
-            { title: 'Sessions & Collaborations', desc: 'Study with peers.' },
-          ].map((feature, index) => (
+          {features.map((feature, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Box
-                sx={{
-                  borderRadius: '16px',
-                  boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)',
-                  padding: '20px',
-                  textAlign: 'center',
-                  backgroundColor: '#fff',
-                  transition: 'transform 0.3s ease',
-                  '&:hover': { transform: 'scale(1.05)' },
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                  {feature.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {feature.desc}
-                </Typography>
-              </Box>
+              <FeatureCard title={feature.title} description={feature.desc} />
             </Grid>
           ))}
         </Grid>
-      </Container>
+      </Box>
+
+      {/* User Testimonials Section */}
+      <Box className={styles.testimonialsSection}>
+        <Typography variant="h4" className={styles.sectionTitle}>
+          What Our Users Say
+        </Typography>
+        <Grid container spacing={3} justifyContent="center">
+          {testimonials.map((testimonial, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Paper elevation={3} className={styles.testimonialCard}>
+                <Typography variant="h6" className={styles.testimonialName}>
+                  {testimonial.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {testimonial.feedback}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* FAQ Section */}
+      <Box className={styles.faqSection}>
+        <Typography variant="h4" className={styles.sectionTitle}>
+          Frequently Asked Questions
+        </Typography>
+        <Grid container spacing={2}>
+          {faqItems.map((item, index) => (
+            <Grid item xs={12} key={index}>
+              <Typography variant="h6" className={styles.faqQuestion}>
+                <FaQuestionCircle /> {item.question}
+              </Typography>
+              <Typography variant="body2" className={styles.faqAnswer}>
+                {item.answer}
+              </Typography>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* Feedback Section */}
+      <Box className={styles.feedbackSection}>
+        <Typography variant="h4" className={styles.sectionTitle}>
+          We Value Your Feedback
+        </Typography>
+        <TextField
+          label="Your Feedback"
+          multiline
+          rows={4}
+          variant="outlined"
+          fullWidth
+          className={styles.feedbackInput}
+        />
+        <Button
+          variant="contained"
+          className={styles.sendButton}
+          endIcon={<FaPaperPlane />}
+          sx={{ marginTop: '16px' }}
+        >
+          Send Feedback
+        </Button>
+      </Box>
 
       {/* Footer Section */}
-      <Box
-        sx={{
-          backgroundColor: '#6c63ff',
-          color: '#fff',
-          padding: '10px 0',
-          textAlign: 'center',
-        }}
-      >
+      <Box className={styles.footer}>
         <Typography variant="body2">
           © 2024 Productivity Hub. All Rights Reserved. |{' '}
-          <Link
-            to="/terms"
-            style={{ textDecoration: 'none', color: '#b3b3ff' }}
-          >
+          <Link to="#" className={styles.footerLink}>
             Terms of Service
           </Link>{' '}
           |{' '}
-          <Link
-            to="/privacy"
-            style={{ textDecoration: 'none', color: '#b3b3ff' }}
-          >
+          <Link to="#" className={styles.footerLink}>
             Privacy Policy
           </Link>
         </Typography>

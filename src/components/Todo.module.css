@@ -1,0 +1,120 @@
+/* src/components/Todo.module.css */
+
+.todoContainer {
+    width: 60%;
+    margin: 40px auto;
+    padding: 30px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .inputSection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .inputSection input,
+  .inputSection textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .inputSection button {
+    background-color: #6c63ff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .inputSection button:hover {
+    background-color: #574bfa;
+  }
+  
+  .taskList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .task {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .taskHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .taskDate {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 10;
+    width: 200px;
+    padding: 10px;
+  }
+  
+  .menu button {
+    background: none;
+    color: #333;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .menu button:hover {
+    background-color: lightgrey;
+  }
+  
+  .closeButton {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    width: 14px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    cursor: pointer;
+  }
+  
+  .closeButton:hover {
+    background-color: #ff7875;
+  }
+  
+  .deleteButton {
+    color: #ff4d4f;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  

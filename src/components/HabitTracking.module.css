@@ -1,0 +1,34 @@
+.habitTrackingContainer {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .habitSection {
+    margin-bottom: 40px;
+  }
+  
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for a week-like view */
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .gridBox {
+    width: 30px;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .gridBox.completed {
+    background-color: #6c63ff;
+  }
+  
+  .calendar {
+    margin-top: 10px;
+  }
+  
