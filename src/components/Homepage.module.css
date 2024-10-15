@@ -1,82 +1,73 @@
 .heroSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 85vh;
-    background: linear-gradient(135deg, #f0f4ff, #fdeff9);
-    text-align: center;
-    padding: 20px;
-    border-radius: 50px;
-    margin-bottom: 20px;
-  }
-  
-  .heroTitle {
-    font-weight: bold;
-    color: #6c63ff;
-    margin-bottom: 16px;
-  }
-  
-  .heroSubtitle {
-    color: #777;
-    max-width: 600px;
-    margin-bottom: 32px;
-    
-  }
-  
-  .exploreButton {
-    background-color: #6c63ff;
-    color: #fff;
-    padding: 12px 28px;
-    border-radius: 8px;
-    margin-top: 10px !important;
-  }
-  
-  .discoverSection {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #e0e7ff, #fff1f1);
-    border-radius: 50px;
-    text-align: center;
-  }
-  
-  .sectionTitle {
-    font-weight: 600;
-    color: #6c63ff;
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  
-  .testimonialsSection, .faqSection, .feedbackSection {
-    padding: 50px 20px;
-  }
-  
-  .testimonialCard {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .faqQuestion {
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  
-  .feedbackInput {
-    margin-top: 16px;
-  }
-  
-  .sendButton {
-    background-color: #6c63ff;
-    color: #fff;
-  }
-  
-  .footer {
-    background-color: #6c63ff;
-    color: #fff;
-    padding: 12px 0;
-    text-align: center;
-  }
-  
-  .footerLink {
-    color: #b3b3ff;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 85vh;
+  background: linear-gradient(135deg, #f0f4ff, #fdeff9);
+  text-align: center;
+  padding: 20px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-weight: bold;
+  color: #6c63ff;
+  margin-bottom: 16px;
+}
+
+.heroSubtitle {
+  color: #777;
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.exploreButton {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+}
+
+.discoverSection {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #e0e7ff, #fff1f1);
+  border-radius: 50px;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  color: #6c63ff;
+  margin-bottom: 24px;
+}
+
+.testimonialsSection, .faqSection, .feedbackSection {
+  padding: 50px 20px;
+}
+
+.testimonialCard {
+  padding: 20px;
+  text-align: center;
+}
+
+.feedbackInput {
+  margin-top: 16px;
+}
+
+.sendButton {
+  background-color: #6c63ff;
+  color: #fff;
+}
+
+.footer {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.footerLink {
+  color: #b3b3ff;
+}

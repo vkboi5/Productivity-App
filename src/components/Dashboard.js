@@ -15,6 +15,9 @@ import {
   Avatar,
   Divider,
   Container,
+  Badge,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import {
   Logout,
@@ -25,9 +28,10 @@ import {
   Group,
   Timeline,
   Forum,
-  Menu,
+  Menu as MenuIcon,
   Home,
   Dashboard as DashboardIcon,
+  Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css'; // Import CSS module
@@ -45,6 +49,12 @@ const sections = [
   { text: 'Sessions and Collaborations', icon: <Forum />, path: 'sessions' },
 ];
 
+const dummyNotifications = [
+  { id: 1, message: 'New message from Alice' },
+  { id: 2, message: 'Session with John scheduled for tomorrow' },
+  { id: 3, message: 'Habit streak achieved: 7 days!' },
+];
+
 const getGreeting = () => {
   const currentHour = new Date().getHours();
   if (currentHour < 12) return 'Good Morning!';
@@ -57,6 +67,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState(getGreeting());
   const [open, setOpen] = useState(true); // Sidebar toggle state
+  const [anchorEl, setAnchorEl] = useState(null); // Notification menu state
+  const notificationsOpen = Boolean(anchorEl); // Check if notification menu is open
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,6 +79,14 @@ const Dashboard = () => {
   }, []);
 
   const toggleDrawer = () => setOpen(!open); // Toggle sidebar visibility
+
+  const handleNotificationClick = (event) => {
+    setAnchorEl(event.currentTarget); // Open notification menu
+  };
+
+  const handleNotificationClose = () => {
+    setAnchorEl(null); // Close notification menu
+  };
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
@@ -84,11 +104,42 @@ const Dashboard = () => {
       >
         <Toolbar>
           <IconButton onClick={toggleDrawer} sx={{ mr: 2 }}>
-            <Menu />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1, textAlign: 'center' }}>
             Dashboard
           </Typography>
+
+          {/* Notifications Bell */}
+          <IconButton
+            color="inherit"
+            onClick={handleNotificationClick}
+            sx={{ mr: 2 }}
+          >
+            <Badge badgeContent={dummyNotifications.length} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+
+          {/* Notification Menu */}
+          <Menu
+            anchorEl={anchorEl}
+            open={notificationsOpen}
+            onClose={handleNotificationClose}
+            PaperProps={{
+              sx: {
+                width: 300,
+                maxHeight: 400,
+              },
+            }}
+          >
+            {dummyNotifications.map((notification) => (
+              <MenuItem key={notification.id}>
+                {notification.message}
+              </MenuItem>
+            ))}
+          </Menu>
+
           <IconButton sx={{ color: 'inherit' }}>
             <Avatar />
           </IconButton>
@@ -108,7 +159,7 @@ const Dashboard = () => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: '#fff', // Removed grey background
+            backgroundColor: '#fff',
             transition: 'width 0.3s ease',
           },
         }}
