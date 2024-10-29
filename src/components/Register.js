@@ -1,7 +1,7 @@
 // src/components/RegisterPage.js
 import React from 'react';
-import { Box, TextField, Button, Typography, Container, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Button, Typography, Container } from '@mui/material';
+import { useNavigate , Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
@@ -81,8 +81,7 @@ const RegisterPage = () => {
               >
                 Register
               </Button>
-
-              <Link href="/login" variant="body2" sx={{ display: 'block', textAlign: 'center' }}>
+              <Link to="/login" variant="body2" sx={{ display: 'block', textAlign: 'center' }}>
                 Already have an account? Login
               </Link>
             </Form>
