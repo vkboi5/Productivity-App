@@ -3,17 +3,21 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 85vh;
-  background: linear-gradient(135deg, #f0f4ff, #fdeff9);
+  flex-wrap: nowrap;
+  height: 60vh;
+  background: #f6f6f6;
   text-align: center;
   padding: 20px;
   border-radius: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
   margin-bottom: 20px;
 }
 
 .heroTitle {
-  font-weight: bold;
-  color: #6c63ff;
+  font-weight:bolder ;
+  font-size: 50px;
+  color: #171717;
   margin-bottom: 16px;
 }
 

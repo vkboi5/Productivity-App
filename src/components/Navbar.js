@@ -4,10 +4,10 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Avatar, Box } from '@m
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ isLoggedIn, handleLogout }) => (
-  <AppBar position="static" sx={{ backgroundColor: '#6c63ff', borderRadius: 7, marginBottom: 2 }}>
+  <AppBar position="static" sx={{ backgroundColor: '#171420', borderRadius: 7, marginBottom: 2 }}>
     <Toolbar>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        <Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>
+        <Link to="/" style={{ textDecoration: 'none', color: '#f6f6f6' }}>
           Productivity Hub
         </Link>
       </Typography>

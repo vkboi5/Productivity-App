@@ -14,6 +14,7 @@ import Community from './components/Community';
 import Progress from './components/Progress';
 import Sessions from './components/Sessions';
 import MindMap from './components/MindMap';
+import './App.css'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

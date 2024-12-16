@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaRegComments, FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
 import FeatureCard from './FeatureCard';
 import styles from './Homepage.module.css'; // Import CSS module
+import gif from '../assets/1664879763504-unscreen.gif'
 
 const features = [
   { title: 'Your Works', desc: 'Track tools and history.' },
@@ -39,20 +40,23 @@ const Homepage = () => {
     <>
       {/* Hero Section */}
       <Box className={styles.heroSection}>
+      <Box className={styles.heroContent}>
         <Typography variant="h2" className={styles.heroTitle}>
-          Welcome to Your Productivity Hub
+          THE INTERNET'S FILE API
         </Typography>
         <Typography variant="h6" className={styles.heroSubtitle}>
-          Manage tasks, track habits, collaborate effortlessly, and achieve your goals in one place.
+          Add file uploads and retrieval in minutes so you can focus on your app — 
+          because you’ve got better things to code than infrastructure.
         </Typography>
-        <Button 
-          variant="contained" 
-          onClick={handleExploreFeatures} 
-          className={styles.exploreButton}
-        >
-          Explore Features
-        </Button>
+        <Box className={styles.buttonGroup}>
+          <Button variant="contained" className={styles.getStartedButton}>Get started</Button>
+          <Button variant="contained" className={styles.readDocsButton}>Read docs</Button>
+          <Button variant="contained" className={styles.joinDiscordButton}>Join discord</Button>
+          <Button variant="contained" className={styles.readBlogButton}>Read blog</Button>
+        </Box>
       </Box>
+      <img src={gif} alt="Animated productivity visual" className={styles.heroGif} />
+    </Box>
 
       {/* Discover Section */}
       <Box className={styles.discoverSection}>
