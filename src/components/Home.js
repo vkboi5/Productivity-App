@@ -39,30 +39,32 @@ const Homepage = () => {
   return (
     <>
       {/* Hero Section */}
-      <Box className={styles.heroSection}>
-      <Box className={styles.heroContent}>
-        <Typography variant="h2" className={styles.heroTitle}>
-          THE INTERNET'S FILE API
-        </Typography>
-        <Typography variant="h6" className={styles.heroSubtitle}>
-          Add file uploads and retrieval in minutes so you can focus on your app — 
-          because you’ve got better things to code than infrastructure.
-        </Typography>
-        <Box className={styles.buttonGroup}>
-          <Button variant="contained" className={styles.getStartedButton}>Get started</Button>
-          <Button variant="contained" className={styles.readDocsButton}>Read docs</Button>
-          <Button variant="contained" className={styles.joinDiscordButton}>Join discord</Button>
-          <Button variant="contained" className={styles.readBlogButton}>Read blog</Button>
-        </Box>
-      </Box>
-      <img src={gif} alt="Animated productivity visual" className={styles.heroGif} />
+<Box className={styles.heroSection}>
+  <Box className={styles.heroContent}>
+    <Typography variant="h2" className={styles.heroTitle}>
+      THE INTERNET'S FILE API
+    </Typography>
+    <Typography variant="h6" className={styles.heroSubtitle}>
+      Add file uploads and retrieval in minutes so you can focus on your app —
+      because you’ve got better things to code than infrastructure.
+    </Typography>
+    <Box className={styles.buttonGroup}>
+    <button className={styles.getStartedButton}>Get Started</button>
+<button className={styles.readDocsButton}>Read Docs</button>
+<button className={styles.joinDiscordButton}>Join Discord</button>
+<button className={styles.readBlogButton}>Read Blog</button>
     </Box>
+  </Box>
+  <img src={gif} alt="Animated productivity visual" className={styles.heroGif} />
+</Box>
+
 
       {/* Discover Section */}
       <Box className={styles.discoverSection}>
         <Typography variant="h4" className={styles.discoverTitle}>
           Discover All Our Tools and Features
         </Typography>
+        <br/>
         <Grid container spacing={4} justifyContent="center">
           {features.map((feature, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
