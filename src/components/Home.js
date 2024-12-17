@@ -1,21 +1,13 @@
 import React, { useRef } from 'react';
 import { 
-  Box, Typography, Button, Grid, Container, Paper, TextField 
+  Box, Typography, Button, Grid, Paper, TextField 
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { FaRegComments, FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
-import FeatureCard from './FeatureCard';
+import {  FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
+// import FeatureCard from './FeatureCard';
 import styles from './Homepage.module.css'; // Import CSS module
 import gif from '../assets/1664879763504-unscreen.gif'
 
-const features = [
-  { title: 'Your Works', desc: 'Track tools and history.' },
-  { title: 'ToDo & Mind Mapping', desc: 'Organize tasks visually.' },
-  { title: 'Habit Tracking', desc: 'Track habits effectively.' },
-  { title: 'Community', desc: 'Engage and share with others.' },
-  { title: 'Progress', desc: 'Monitor productivity milestones.' },
-  { title: 'Sessions & Collaborations', desc: 'Study with peers.' },
-];
 
 const testimonials = [
   { name: 'Alice Smith', feedback: 'This app changed the way I manage my tasks!' },
@@ -60,25 +52,39 @@ const Homepage = () => {
 
 
       {/* Discover Section */}
-      <Box className={styles.discoverSection}>
-        <Typography variant="h4" className={styles.discoverTitle}>
-          Discover All Our Tools and Features
-        </Typography>
-        <br/>
-        <Grid container spacing={4} justifyContent="center">
-          {features.map((feature, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <FeatureCard title={feature.title} description={feature.desc} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+<Box className={styles.discoverSection}>
+  <Typography variant="h4" className={styles.discoverTitle}>
+    Discover All Our Tools and Features
+  </Typography>
+  <br />
+
+  {/* Grid Layout */}
+  <Grid container spacing={3} justifyContent="center">
+    {[
+      { title: "Your Works", desc: "Manage all your projects and tasks efficiently.", className: styles.yourWorks },
+      { title: "ToDo & Mind Mapping", desc: "Organize tasks and visualize ideas easily.", className: styles.todoMindMapping },
+      { title: "Habit Tracking", desc: "Track and build productive habits.", className: styles.habitTracking },
+      { title: "Community", desc: "Collaborate and connect with others.", className: styles.community },
+      { title: "Progress", desc: "Track your progress over time.", className: styles.progress },
+      { title: "Sessions & Collaborations", desc: "Work seamlessly with your team.", className: styles.sessionsCollab }
+    ].map((section, index) => (
+      <Grid item xs={12} sm={6} md={4} key={index}>
+        <Box className={`${styles.sectionContainer} ${section.className}`}>
+          <Typography variant="h5" className={styles.sectionTitle}>{section.title}</Typography>
+          <Typography variant="body2">{section.desc}</Typography>
+        </Box>
+      </Grid>
+    ))}
+  </Grid>
+</Box>
+
 
       {/* User Testimonials Section */}
       <Box className={styles.testimonialsSection}>
-        <Typography variant="h4" className={styles.sectionTitle}>
+        <Typography variant="h4" className={styles.testimonialsText}>
           What Our Users Say
         </Typography>
+        <br/>
         <Grid container spacing={3} justifyContent="center">
           {testimonials.map((testimonial, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -97,9 +103,10 @@ const Homepage = () => {
 
       {/* FAQ Section */}
       <Box className={styles.faqSection}>
-        <Typography variant="h4" className={styles.sectionTitle}>
+        <Typography variant="h4" className={styles.faqText}>
           Frequently Asked Questions
         </Typography>
+        <br/>
         <Grid container spacing={2}>
           {faqItems.map((item, index) => (
             <Grid item xs={12} key={index}>
@@ -116,17 +123,32 @@ const Homepage = () => {
 
       {/* Feedback Section */}
       <Box className={styles.feedbackSection}>
-        <Typography variant="h4" className={styles.sectionTitle}>
+        <Typography variant="h4" className={styles.feedbackText}>
           We Value Your Feedback
         </Typography>
         <TextField
-          label="Your Feedback"
-          multiline
-          rows={4}
-          variant="outlined"
-          fullWidth
-          className={styles.feedbackInput}
-        />
+  label="Your Feedback"
+  multiline
+  rows={4}
+  variant="outlined"
+  fullWidth
+  className={styles.feedbackInput}
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": { borderColor: "white" }, // Default border color
+      "&:hover fieldset": { borderColor: "white" }, // Hover state
+      "&.Mui-focused fieldset": { borderColor: "white" }, // Focused state
+      "& input, & textarea": { color: "white" }, // Text color for input
+    },
+    "& .MuiInputLabel-root": {
+      color: "white", // Label text color
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "white", // Focused label text color
+    }
+  }}
+/>
+
         <Button
           variant="contained"
           className={styles.sendButton}
