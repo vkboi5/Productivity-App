@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 10%;
+  padding: 0px 50px;
+  margin: 50px;
   background-color: #f8f8fc; /* Light background color */
   color: #0a0a0a; /* Dark text color */
   min-height: 80vh;
@@ -51,42 +52,8 @@
   transform: scale(1.05);
 }
 
-.readDocsButton {
-  background-color: #38d2ac; /* Green button */
-  color: #fff;
-  font-size: 1rem; /* Larger text */
-  font-weight: bold;
-  padding: 16px 13px; /* Increase button size */
-  border-radius: 10px; /* Smoother edges */
-  text-transform: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.readDocsButton:hover {
-  transform: scale(1.05);
-}
-
-.joinDiscordButton {
-  background-color: #fc79b4; /* Pink button */
-  color: #fff;
-  font-size: 1rem; /* Larger text */
-  font-weight: bold;
-  padding: 16px 13px; /* Increase button size */
-  border-radius: 10px; /* Smoother edges */
-  text-transform: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.joinDiscordButton:hover {
-  transform: scale(1.05);
-}
-
 .readBlogButton {
-  background-color: #ff9f2d; /* Orange button */
+  background-color: #7b61ff; /* Purple button */
   color: #fff;
   font-size: 1rem; /* Larger text */
   font-weight: bold;
@@ -129,7 +96,7 @@
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: rgb(85, 81, 81); /* Ensure text is visible */
-  height: 200px; /* Adjust for rectangle shape */
+  height: 100px; /* Adjust for rectangle shape */
 }
 
 .yourWorks {
@@ -165,6 +132,7 @@
 
 .discoverSection {
   padding: 80px 20px;
+  margin: 50px;
   background-color: #f8f8fc;
   border-radius: 50px;
   text-align: center;
@@ -317,12 +285,12 @@
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   margin: 0 5px;
   border-radius: 50%;
   background-color: #ccc;
-  border: none;
+  border: white 1px solid;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

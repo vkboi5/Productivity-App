@@ -1,6 +1,6 @@
 // src/App.js
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import LoginPage from './components/Login';
 import RegisterPage from './components/Register';
 import Homepage from './components/Home';
@@ -8,27 +8,27 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import YourWorks from './components/YourWorks';
-import ToDo from './components/ToDo'; 
+import ToDo from './components/ToDo';
 import HabitTracking from './components/HabitTracking';
 import Community from './components/Community';
 import Progress from './components/Progress';
 import Sessions from './components/Sessions';
 import MindMap from './components/MindMap';
-import './App.css'
+import './App.css';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+  // Exclude Navbar for dashboard routes
+  const hideNavbarRoutes = ['/dashboard', '/dashboard/profile', '/dashboard/your-works', '/dashboard/todo', '/dashboard/habit-tracking', '/dashboard/community', '/dashboard/progress', '/dashboard/sessions', '/dashboard/mind-map'];
+  const shouldShowNavbar = !hideNavbarRoutes.some((path) => location.pathname.startsWith(path));
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
         {/* Nested Routes for Dashboard */}

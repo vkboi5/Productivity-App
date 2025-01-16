@@ -1,5 +1,5 @@
-// src/components/Profile.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Box,
   Typography,
@@ -20,29 +20,75 @@ import {
 import styles from './Profile.module.css'; // Import the CSS module
 
 const Profile = () => {
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('john.doe@example.com');
-  const [bio, setBio] = useState('A short bio about yourself.');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [bio, setBio] = useState('');
   const [password, setPassword] = useState('');
   const [notifications, setNotifications] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const handleSave = () => console.log('Profile updated:', { name, email, bio });
-  const handlePasswordChange = () => console.log('Password changed:', password);
-  const handleAccountDisable = () => console.log('Account disabled');
-  const handleAccountDelete = () => console.log('Account deleted');
+  const token = localStorage.getItem('token'); // Assuming the token is saved in localStorage
+
+  useEffect(() => {
+    // Fetch user details on component mount
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user-details', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const { name, email, bio, notifications } = response.data.user;
+        setName(name);
+        setEmail(email);
+        setBio(bio);
+        setNotifications(notifications);
+        setLoading(false); // Set loading to false once the data is fetched
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserDetails();
+  }, [token]);
+
+  const handleSave = () => {
+    console.log('Profile updated:', { name, email, bio });
+    // Add code to save the changes to the backend
+  };
+
+  const handlePasswordChange = () => {
+    console.log('Password changed:', password);
+    // Add code to change the password
+  };
+
+  const handleAccountDisable = () => {
+    console.log('Account disabled');
+    // Add code to disable the account
+  };
+
+  const handleAccountDelete = () => {
+    console.log('Account deleted');
+    // Add code to delete the account
+  };
+
   const toggleNotifications = () => setNotifications(!notifications);
 
   const openDangerDialog = () => setOpenDialog(true);
   const closeDangerDialog = () => setOpenDialog(false);
 
+  if (loading) {
+    return <Typography variant="h6">Loading...</Typography>;
+  }
+
   return (
     <Paper
       sx={{
         maxWidth: '90%',
-        margin: '20px auto',
         padding: 4,
-        background: 'linear-gradient(135deg, #e0f7fa, #fce4ec)',
+        background: 'white',
         borderRadius: 12,
         boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
       }}
@@ -149,27 +195,6 @@ const Profile = () => {
         </Grid>
 
         <Divider sx={{ my: 4 }} />
-
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" color="error" gutterBottom>
-              Danger Zone
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ textAlign: 'right' }}>
-            <Button
-              variant="outlined"
-              color="error"
-              sx={{ mr: 2 }}
-              onClick={openDangerDialog}
-            >
-              Disable Account
-            </Button>
-            <Button variant="contained" color="error" onClick={openDangerDialog}>
-              Delete Account
-            </Button>
-          </Grid>
-        </Grid>
 
         <Dialog open={openDialog} onClose={closeDangerDialog}>
           <DialogTitle>Confirm Action</DialogTitle>

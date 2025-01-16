@@ -172,7 +172,9 @@ const Dashboard = () => {
             <DashboardIcon sx={{ fontSize: 40, color: '#6c63ff' }} />
           </IconButton>
         </Toolbar>
+
         <Divider />
+
         <List>
           {sections.map((section) => (
             <Link
@@ -196,9 +198,13 @@ const Dashboard = () => {
         component="main"
         sx={{
           flexGrow: 1,
+          marginTop:"50px",
           transition: 'margin-left 0.3s ease',
+          backgroundColor:"#f8f8fc",
+          overflowY:'scroll',
           ml: open ? `0px` : 0,
           display: 'flex',
+          height:"100vh",
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',

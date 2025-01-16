@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { 
-  Box, Typography, Button, Grid, Paper, TextField, Accordion, AccordionSummary, AccordionDetails 
+import {
+  Box, Typography, Button, Grid, Paper, TextField, Accordion, AccordionSummary, AccordionDetails
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
@@ -10,62 +10,54 @@ import styles from './Homepage.module.css'; // Import CSS module
 import gif from '../assets/1664879763504-unscreen.gif';
 
 const testimonials = [
-  { 
-    name: 'Alex Smith', 
-    feedback: 'This app has truly revolutionized the way I manage my tasks! The daily reminders and habit-tracking features have kept me on track, and the design is so user-friendly. It’s like having a personal assistant in my pocket.', 
-    img: require('../assets/B1.jpeg'), 
-    rating: 5 
+  {
+    name: 'Alex Smith',
+    feedback: 'This app has truly revolutionized the way I manage my tasks! The daily reminders and habit-tracking features have kept me on track, and the design is so user-friendly. It’s like having a personal assistant in my pocket.',
+    img: require('../assets/B1.jpeg'),
+    rating: 5
   },
-  { 
-    name: 'John Doe', 
-    feedback: 'I’ve tried countless habit trackers, but this one stands out. The simplicity of its interface combined with the powerful analytics feature has made it my go-to tool for productivity. Highly recommend it to anyone looking to build better habits!', 
-    img:  require('../assets/B2.jpeg'), 
-    rating: 4 
+  {
+    name: 'John Doe',
+    feedback: 'I’ve tried countless habit trackers, but this one stands out. The simplicity of its interface combined with the powerful analytics feature has made it my go-to tool for productivity. Highly recommend it to anyone looking to build better habits!',
+    img: require('../assets/B2.jpeg'),
+    rating: 4
   },
-  { 
-    name: 'Sarah Lee', 
-    feedback: 'The collaboration feature is a game-changer for team projects. I’ve used it to coordinate tasks with my colleagues, and the visual progress tracking keeps everyone motivated. It’s a must-have app for professionals.', 
-    img:  require('../assets/G1.jpeg'), 
-    rating: 5 
+  {
+    name: 'Sarah Lee',
+    feedback: 'The collaboration feature is a game-changer for team projects. I’ve used it to coordinate tasks with my colleagues, and the visual progress tracking keeps everyone motivated. It’s a must-have app for professionals.',
+    img: require('../assets/G1.jpeg'),
+    rating: 5
   },
-  { 
-    name: 'Michael Brown', 
-    feedback: 'This app has simplified my life in ways I didn’t think possible. From managing personal goals to tracking my team’s deadlines, everything is so well-organized. Plus, the app’s dark mode is an absolute treat for my late-night work sessions!', 
-    img:  require('../assets/B3.jpeg'), 
-    rating: 5 
+  {
+    name: 'Michael Brown',
+    feedback: 'This app has simplified my life in ways I didn’t think possible. From managing personal goals to tracking my team’s deadlines, everything is so well-organized. Plus, the app’s dark mode is an absolute treat for my late-night work sessions!',
+    img: require('../assets/B3.jpeg'),
+    rating: 5
   },
-  { 
-    name: 'Emily Johnson', 
-    feedback: 'As someone who often struggles with procrastination, this app has been a lifesaver. The habit reminders and streak tracking keep me accountable, and the motivational quotes are a nice touch. My productivity has soared since I started using it!', 
-    img: require('../assets/G2.jpeg'), 
-    rating: 4 
+  {
+    name: 'Emily Johnson',
+    feedback: 'As someone who often struggles with procrastination, this app has been a lifesaver. The habit reminders and streak tracking keep me accountable, and the motivational quotes are a nice touch. My productivity has soared since I started using it!',
+    img: require('../assets/G2.jpeg'),
+    rating: 4
   },
 ];
 
 const faqItems = [
-  { question: 'How do I track my habits?', answer: `You can track your habits using the Habit Tracking section in the app. 
+  {
+    question: 'How do I track my habits?', answer: `You can track your habits using the Habit Tracking section in the app. 
     Simply create a list of habits you want to develop or monitor, and set daily or weekly goals for each habit. 
     The app allows you to log your progress daily, view detailed statistics, and receive reminders to stay consistent. 
     You can also customize your habit tracker by categorizing habits or assigning specific colors for easier visualization.` },
 
-  { question: 'Can I collaborate with others?', answer: `Absolutely! The app offers a collaboration feature where you can invite peers, friends, or colleagues to work on shared tasks, projects, or study sessions. 
+  {
+    question: 'Can I collaborate with others?', answer: `Absolutely! The app offers a collaboration feature where you can invite peers, friends, or colleagues to work on shared tasks, projects, or study sessions. 
     You can create private or public sessions to interact with others, exchange ideas, and share resources in real time. 
     This feature is perfect for teams or study groups looking to stay organized and aligned while working toward a common goal.` },
 
-  { question: 'Is this app free?', answer: `Yes, the app is free to use, and all core features are available at no cost. 
+  {
+    question: 'Is this app free?', answer: `Yes, the app is free to use, and all core features are available at no cost. 
     This includes habit tracking, task management, and collaboration tools. 
     For users looking for advanced functionalities like detailed analytics, personalized reminders, or priority support, we offer a premium plan at an affordable price.` },
-
-    { 
-      question: 'Can I use the app offline?', 
-      answer: `Yes, the app supports offline functionality, allowing you to track your habits, update tasks, and view your progress even when you don't have internet access. 
-      Once you’re back online, the app automatically syncs your data to ensure everything stays updated across your devices.`
-    },
-    { 
-      question: 'How secure is my data?', 
-      answer: `We take data security very seriously. All your information is encrypted and stored securely in compliance with industry standards. 
-      The app uses SSL encryption to protect your data during transmission, and we do not share your data with third parties without your explicit consent.`
-    }
 ];
 
 // TestimonialCarousel Component
@@ -87,6 +79,7 @@ const TestimonialCarousel = () => {
   const handleDotClick = (index) => {
     setCurrentIndex(index);
   };
+
 
   return (
     <Box className={styles.testimonialsCarousel}>
@@ -159,16 +152,16 @@ const Homepage = () => {
       <Box className={styles.heroSection}>
         <Box className={styles.heroContent}>
           <Typography variant="h2" className={styles.heroTitle}>
-            THE INTERNET'S FILE API
+            Supercharge Your Productivity!
+          </Typography>
+          <Typography variant="h4" className={styles.heroSubtitle}>
+            With Elevate
           </Typography>
           <Typography variant="h6" className={styles.heroSubtitle}>
-            Add file uploads and retrieval in minutes so you can focus on your app —
-            because you’ve got better things to code than infrastructure.
+            Stay organized, focus on what matters, and achieve more with tools designed to help you work smarter, not harder.
           </Typography>
           <Box className={styles.buttonGroup}>
             <button className={styles.getStartedButton}>Get Started</button>
-            <button className={styles.readDocsButton}>Read Docs</button>
-            <button className={styles.joinDiscordButton}>Join Discord</button>
             <button className={styles.readBlogButton}>Read Blog</button>
           </Box>
         </Box>
@@ -202,30 +195,30 @@ const Homepage = () => {
           ))}
         </Grid>
       </Box>
-      <br/>
+      <br />
 
       {/* User Testimonials Section */}
-      
+
       <TestimonialCarousel />
 
 
-          
+
 
       {/* FAQ Section */}
       <Box className={styles.faqSection}>
         <Typography variant="h3" className={styles.faqText}>
           Frequently Asked Questions
         </Typography>
-        <br/>
+        <br />
         {/* Image Below FAQ Section */}
-<Box sx={{ display: 'flex', justifyContent: 'center', marginTop:'7px' }}>
-  <img 
-    src={require('../assets/qm.png')} 
-    alt="FAQ Illustration" 
-    style={{ width: '50%', maxWidth: '200px', height: 'auto' }} 
-  />
-</Box>
-<br />
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '7px' }}>
+          <img
+            src={require('../assets/qm.png')}
+            alt="FAQ Illustration"
+            style={{ width: '50%', maxWidth: '200px', height: 'auto' }}
+          />
+        </Box>
+        <br />
         <Grid container justifyContent="center">
           <Grid item xs={12} md={8}>
             {faqItems.map((item, index) => (

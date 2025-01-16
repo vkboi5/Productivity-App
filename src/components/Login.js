@@ -1,138 +1,116 @@
-import { Box, TextField, Button, Typography, Link } from '@mui/material';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.module.css'; // Custom styles for additional CSS
+import axios from 'axios';
+import styles from './Login.module.css';
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
 });
 
-const LoginPage = () => {
+const Login = () => {
   const navigate = useNavigate();
 
+  const handleLogin = async (values, { setSubmitting, setFieldError }) => {
+    try {
+      // Send POST request to login endpoint
+      const response = await axios.post('http://localhost:5000/login', values);
+
+      // Extract token from response
+      const { token } = response.data;
+
+      // Store token in localStorage
+      localStorage.setItem('authToken', token);
+
+      // Redirect to dashboard
+      navigate('/dashboard');
+    } catch (error) {
+      setSubmitting(false);
+
+      // Handle error cases
+      if (error.response && error.response.data.message) {
+        setFieldError('email', error.response.data.message); // Show error message under email field
+      } else {
+        console.error('Login error:', error);
+        alert('Something went wrong. Please try again.');
+      }
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        height: '100vh',
-        backgroundColor: '#121212',
-        color: '#fff',
-      }}
-    >
+    <div className={styles.container}>
       {/* Left Section - Form */}
-      <Box
-        sx={{
-          width: '50%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '2rem',
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: '1rem' }}>
-          Sign in to your account
-        </Typography>
-        <Typography variant="body1" sx={{ marginBottom: '2rem' }}>
-          Welcome back!
-        </Typography>
+      <div className={styles.formSection}>
+        <h2 className={styles.heading}>Sign in to your account</h2>
+        <p className={styles.subheading}>Welcome back!</p>
 
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            console.log(values);
-            navigate('/dashboard');
-          }}
+          onSubmit={(values, actions) => handleLogin(values, actions)}
         >
-          {({ errors, touched }) => (
-            <Form style={{ width: '100%', maxWidth: '400px' }}>
-              <Field
-                as={TextField}
-                fullWidth
-                name="email"
-                label="Email"
-                placeholder="Enter your email"
-                variant="outlined"
-                margin="normal"
-                InputProps={{ style: { color: '#fff', borderColor: '#6f42c1' } }}
-                error={touched.email && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
-              />
-              <Field
-                as={TextField}
-                fullWidth
-                type="password"
-                name="password"
-                label="Password"
-                placeholder="Enter your password"
-                variant="outlined"
-                margin="normal"
-                InputProps={{ style: { color: '#fff' } }}
-                error={touched.password && Boolean(errors.password)}
-                helperText={touched.password && errors.password}
-              />
-              <Typography
-                variant="caption"
-                sx={{ display: 'block', textAlign: 'right', marginBottom: '1rem', color: '#aaa' }}
-              >
-                <Link href="#" color="inherit">
-                  Forgot Password?
-                </Link>
-              </Typography>
-              <Button
+          {({ errors, touched, isSubmitting }) => (
+            <Form className={styles.form}>
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email</label>
+                <Field
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className={`${styles.input} ${
+                    touched.email && errors.email ? styles.errorInput : ''
+                  }`}
+                />
+                {touched.email && errors.email && (
+                  <div className={styles.errorMessage}>{errors.email}</div>
+                )}
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="password">Password</label>
+                <Field
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  className={`${styles.input} ${
+                    touched.password && errors.password ? styles.errorInput : ''
+                  }`}
+                />
+                {touched.password && errors.password && (
+                  <div className={styles.errorMessage}>{errors.password}</div>
+                )}
+              </div>
+              <div className={styles.forgotPassword}>
+                <a href="#">Forgot Password?</a>
+              </div>
+              <button
                 type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  backgroundColor: '#6f42c1',
-                  color: '#fff',
-                  padding: '0.8rem',
-                  fontWeight: 'bold',
-                  '&:hover': { backgroundColor: '#5a3496' },
-                }}
+                className={styles.submitButton}
+                disabled={isSubmitting}
               >
-                Sign In
-              </Button>
-              <Typography
-                variant="body2"
-                sx={{ textAlign: 'center', marginTop: '2rem', color: '#aaa' }}
-              >
-                No account?{' '}
-                <Link href="/register" underline="none" sx={{ color: '#6f42c1', fontWeight: 'bold' }}>
-                  Create one
-                </Link>
-              </Typography>
+                {isSubmitting ? 'Signing In...' : 'Sign In'}
+              </button>
+              <p className={styles.signupText}>
+                No account? <a href="/register">Create one</a>
+              </p>
             </Form>
           )}
         </Formik>
-      </Box>
+      </div>
 
       {/* Right Section - Illustration */}
-      <Box
-        sx={{
-          width: '50%',
-          backgroundColor: '#8c52ff',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'relative',
-        }}
-      >
+      <div className={styles.illustrationSection}>
         <img
           src="https://cdn3d.iconscout.com/3d/premium/thumb/party-llama-with-balloons-6304796-5187184.png"
           alt="Llama Illustration"
-          style={{
-            width: '60%',
-            height: 'auto',
-            objectFit: 'contain',
-          }}
+          className={styles.illustration}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 
-export default LoginPage;
+export default Login;

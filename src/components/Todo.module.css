@@ -1,120 +1,133 @@
-/* src/components/Todo.module.css */
-
 .todoContainer {
-    width: 60%;
-    margin: 40px auto;
-    padding: 30px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .inputSection {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
-  }
-  
-  .inputSection input,
-  .inputSection textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-  }
-  
-  .inputSection button {
-    background-color: #6c63ff;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .inputSection button:hover {
-    background-color: #574bfa;
-  }
-  
-  .taskList {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .task {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  
-  .taskHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .taskDate {
-    font-size: 12px;
-    color: #888;
-  }
-  
-  .menu {
-    position: absolute;
-    top: 40px;
-    right: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    z-index: 10;
-    width: 200px;
-    padding: 10px;
-  }
-  
-  .menu button {
-    background: none;
-    color: #333;
-    border: none;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-  }
-  
-  .menu button:hover {
-    background-color: lightgrey;
-  }
-  
-  .closeButton {
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 14px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    cursor: pointer;
-  }
-  
-  .closeButton:hover {
-    background-color: #ff7875;
-  }
-  
-  .deleteButton {
-    color: #ff4d4f;
-  }
-  
-  .completed {
-    text-decoration: line-through;
-    color: #aaa;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #f5f5f5;
+  height: 100vh;
+  width: 100%;
+}
+
+h1 {
+  color: #6c63ff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+input, textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input {
+  height: 40px;
+}
+
+textarea {
+  height: 100px;
+}
+
+button {
+  background-color: #6c63ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #483ffe;
+}
+
+.taskList {
+  width: 60%;
+  max-width: 600px;
+}
+
+.task {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.task.completed {
+  background-color: #e8f5e9;
+  text-decoration: line-through;
+}
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskHeader span {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.taskDate {
+  font-size: 12px;
+  color: #888;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.menu button {
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  color: #6a1b9a;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu button:hover {
+  color: #8e24aa;
+}
+
+.deleteButton {
+  color: red;
+}
+
+.closeButton {
+  align-self: flex-end;
+  font-size: 20px;
+  color: #6a1b9a;
+}
+
+.taskDetails {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}

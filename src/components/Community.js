@@ -1,42 +1,107 @@
-// src/components/Community.js
-import React, { useState } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, TextField, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import styles from './Community.module.css'; // Import custom CSS for styling
 
 const Community = () => {
-  const [posts, setPosts] = useState([{ user: 'Alice', content: 'Hello everyone!' }]);
+  const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState('');
 
+  // Fetch posts from the server
+  useEffect(() => {
+    fetch('http://localhost:5000/api/community/posts')
+      .then((response) => response.json())
+      .then((data) => setPosts(data));
+  }, []);
+
+  // Handle adding a new post
   const handleAddPost = () => {
     if (newPost.trim()) {
-      setPosts([...posts, { user: 'You', content: newPost }]);
+      fetch('http://localhost:5000/api/community/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user: 'You', content: newPost }),
+      })
+        .then((response) => response.json())
+        .then((data) => setPosts([...posts, data]));
+
       setNewPost('');
     }
   };
 
+  // Handle deleting a post
+  const handleDeletePost = (id) => {
+    fetch(`http://localhost:5000/api/community/posts/${id}`, {
+      method: 'DELETE',
+    })
+      .then(() => setPosts(posts.filter((post) => post._id !== id)));
+  };
+
+  // Handle updating a post
+  const handleUpdatePost = (id, updatedContent) => {
+    fetch(`http://localhost:5000/api/community/posts/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content: updatedContent }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(posts.map((post) => (post._id === id ? data : post)));
+      });
+  };
+
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Community
-      </Typography>
-      <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-        <TextField
-          label="New Post"
+    <div className={styles.communityContainer}>
+      <h1 className={styles.header}>Community</h1>
+      <div className={styles.newPostContainer}>
+        <textarea
+          className={styles.textarea}
+          placeholder="What's on your mind?"
           value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
-          fullWidth
         />
-        <Button variant="contained" onClick={handleAddPost}>
+        <button className={styles.postButton} onClick={handleAddPost}>
           Post
-        </Button>
-      </Box>
-      <List sx={{ mt: 2 }}>
-        {posts.map((post, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={`${post.user}: ${post.content}`} />
-          </ListItem>
+        </button>
+      </div>
+
+      <div className={styles.postsList}>
+        {posts.map((post) => (
+          <div key={post._id} className={styles.post}>
+            <div className={styles.postHeader}>
+              <span className={styles.user}>{post.user}</span>
+              <span className={styles.date}>
+                {new Date(post.createdAt).toLocaleString()}
+              </span>
+            </div>
+            <div className={styles.postContent}>
+              <p>{post.content}</p>
+            </div>
+            <div className={styles.postActions}>
+              <button
+                className={styles.editButton}
+                onClick={() => {
+                  const updatedContent = prompt('Edit your post:', post.content);
+                  if (updatedContent !== null) {
+                    handleUpdatePost(post._id, updatedContent);
+                  }
+                }}
+              >
+                Edit
+              </button>
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDeletePost(post._id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         ))}
-      </List>
-    </Box>
+      </div>
+    </div>
   );
 };
 
