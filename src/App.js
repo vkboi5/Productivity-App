@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import YourWorks from './components/YourWorks';
-import ToDo from './components/ToDo';
+import ToDo from './components/ToDo'; 
 import HabitTracking from './components/HabitTracking';
 import Community from './components/Community';
 import Progress from './components/Progress';
