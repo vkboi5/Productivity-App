@@ -175,7 +175,6 @@ app.delete('/posts/:id', async (req, res) => {
   }
 });
 
-
 // Server Start
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

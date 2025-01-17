@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #fff;
   padding: 2rem;
 }
 
@@ -98,8 +99,7 @@
 }
 
 .illustrationSection {
-  width: 50%;
-  background-color: #8c52ff;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;

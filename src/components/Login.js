@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Login.module.css';
+import loginImg from './login.png'
 
 const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Required'),
@@ -54,7 +55,7 @@ const Login = () => {
           {({ errors, touched, isSubmitting }) => (
             <Form className={styles.form}>
               <div className={styles.formGroup}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email" style={{color:"white"}}>Email</label>
                 <Field
                   id="email"
                   name="email"
@@ -69,7 +70,7 @@ const Login = () => {
                 )}
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" style={{color:"white"}}>Password</label>
                 <Field
                   id="password"
                   name="password"
@@ -104,7 +105,7 @@ const Login = () => {
       {/* Right Section - Illustration */}
       <div className={styles.illustrationSection}>
         <img
-          src="https://cdn3d.iconscout.com/3d/premium/thumb/party-llama-with-balloons-6304796-5187184.png"
+          src={loginImg}
           alt="Llama Illustration"
           className={styles.illustration}
         />

@@ -7,7 +7,7 @@ const Community = () => {
 
   // Fetch posts from the server
   useEffect(() => {
-    fetch('http://localhost:5000/api/community/posts')
+    fetch('http://localhost:5000/posts')
       .then((response) => response.json())
       .then((data) => setPosts(data));
   }, []);
@@ -15,7 +15,7 @@ const Community = () => {
   // Handle adding a new post
   const handleAddPost = () => {
     if (newPost.trim()) {
-      fetch('http://localhost:5000/api/community/posts', {
+      fetch('http://localhost:5000/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const Community = () => {
 
   // Handle deleting a post
   const handleDeletePost = (id) => {
-    fetch(`http://localhost:5000/api/community/posts/${id}`, {
+    fetch(`http://localhost:5000/posts/${id}`, {
       method: 'DELETE',
     })
       .then(() => setPosts(posts.filter((post) => post._id !== id)));
@@ -39,7 +39,7 @@ const Community = () => {
 
   // Handle updating a post
   const handleUpdatePost = (id, updatedContent) => {
-    fetch(`http://localhost:5000/api/community/posts/${id}`, {
+    fetch(`http://localhost:5000/posts/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => (
   <nav className={styles.navbar}>
     <div className={styles.logo}>
       <Link to="/" className={styles.navLink}>
-        Productivity Hub
+        Elevate
       </Link>
     </div>
     <div className={styles.navItems}>
