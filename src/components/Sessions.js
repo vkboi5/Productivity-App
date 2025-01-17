@@ -1,84 +1,94 @@
-// src/components/SessionsCollaborations.js
-import React, { useState } from 'react';
-import { Box, Typography, Button, TextField, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+import { Box, Button, TextField, Typography, Container, Paper } from "@mui/material";
 
-const SessionsCollaborations = () => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]); // Stores all messages in the current session
+const socket = io.connect("http://localhost:3001");
 
-  // Regex for detecting Zoom and Google Meet links
-  const zoomRegex = /https:\/\/zoom\.us\/j\/\d+/i;
-  const meetRegex = /https:\/\/meet\.google\.com\/\S+/i;
+function Sessions() {
+  // Room and Messages States
+  const [room, setRoom] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageReceived, setMessageReceived] = useState("");
 
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        id: Date.now(), // A simple unique ID based on timestamp
-        content: message,
-        author: 'User', // Hardcoded for now, could be dynamic later
-        isLink: zoomRegex.test(message) || meetRegex.test(message), // Check if it's a link
-      };
-
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setMessage('');
+  // Join room function
+  const joinRoom = () => {
+    if (room !== "") {
+      socket.emit("join_room", room);
     }
   };
 
+  // Send message function
+  const sendMessage = () => {
+    if (message.trim() !== "") {
+      socket.emit("send_message", { message, room });
+      setMessage(""); // Clear input after sending message
+    }
+  };
+
+  // Handle message reception
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      setMessageReceived(data.message);
+    });
+  }, [socket]);
+
   return (
-    <Box sx={{ padding: 3, display: 'flex', flexDirection: 'column', height: '60vh' }}>
-      <Typography variant="h4" gutterBottom>
-        Sessions & Collaborations
-      </Typography>
-      
-      {/* Session Messages List */}
-      <Box
-        sx={{
-          flex: 1,
-          overflowY: 'auto',
-          marginBottom: 2,
-          border: '1px solid #ddd',
-          borderRadius: 1,
-          padding: 2,
-          backgroundColor: '#f4f4f4',
-        }}
-      >
-        <List>
-          {messages.map((msg) => (
-            <ListItem key={msg.id}>
-              <ListItemText
-                primary={msg.isLink ? (
-                  <a href={msg.content} target="_blank" rel="noopener noreferrer">{msg.content}</a>
-                ) : (
-                  `${msg.author}: ${msg.content}`
-                )}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+    <Container maxWidth="sm" sx={{ marginTop: 4 }}>
+      <Paper elevation={3} sx={{ padding: 3, textAlign: "center" }}>
+        <Typography variant="h4" sx={{ marginBottom: 2 }}>
+          Sessions & Collaborations
+        </Typography>
 
-      <Divider sx={{ marginBottom: 2 }} />
-
-      {/* Message Input Box */}
-      <Box sx={{ display: 'flex' }}>
+        {/* Room Input */}
         <TextField
-          label="Type your message"
+          label="Room Number"
+          variant="outlined"
+          fullWidth
+          value={room}
+          onChange={(e) => setRoom(e.target.value)}
+          sx={{ marginBottom: 2 }}
+        />
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={joinRoom}
+          fullWidth
+          sx={{ marginBottom: 2 }}
+        >
+          Join Room
+        </Button>
+
+        {/* Message Input */}
+        <TextField
+          label="Message"
           variant="outlined"
           fullWidth
           value={message}
-          onChange={handleMessageChange}
-          sx={{ marginRight: 2 }}
+          onChange={(e) => setMessage(e.target.value)}
+          sx={{ marginBottom: 2 }}
         />
-        <Button variant="contained" color="primary" onClick={handleSendMessage}>
-          Send
-        </Button>
-      </Box>
-    </Box>
-  );
-};
 
-export default SessionsCollaborations;
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={sendMessage}
+          fullWidth
+        >
+          Send Message
+        </Button>
+
+        <Box sx={{ marginTop: 3 }}>
+          <Typography variant="h6" sx={{ marginBottom: 1 }}>
+            Last Received Message:
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            {messageReceived || "No messages yet..."}
+          </Typography>
+        </Box>
+      </Paper>
+    </Container>
+  );
+}
+
+export default Sessions;
