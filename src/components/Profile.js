@@ -28,7 +28,7 @@ const Profile = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem('token'); // Assuming the token is saved in localStorage
+  const token = localStorage.getItem('authToken'); // Assuming the token is saved in localStorage
 
   useEffect(() => {
     // Fetch user details on component mount

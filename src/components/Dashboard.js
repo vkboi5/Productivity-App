@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -88,6 +87,13 @@ const Dashboard = () => {
     setAnchorEl(null); // Close notification menu
   };
 
+  const handleLogout = () => {
+    // Remove authToken from localStorage
+    localStorage.removeItem('authToken');
+    // Redirect to the login page
+    navigate('/login');
+  };
+
   return (
     <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       {/* Top Bar */}
@@ -143,7 +149,9 @@ const Dashboard = () => {
           <IconButton sx={{ color: 'inherit' }}>
             <Avatar />
           </IconButton>
-          <IconButton sx={{ color: 'inherit' }} onClick={() => navigate('/')}>
+
+          {/* Logout Button */}
+          <IconButton sx={{ color: 'inherit' }} onClick={handleLogout}>
             <Logout />
           </IconButton>
         </Toolbar>

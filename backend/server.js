@@ -6,10 +6,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const connectDB = require('./database/db');
 const User = require('./models/User');
-const Post = require('./models/Post');
 const http = require("http");
 const { Server } = require("socket.io");
-
+const blogRouter = require("./routes/blog-routes");
 dotenv.config();
 connectDB();
 
@@ -18,6 +17,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/api/blogs", blogRouter);
 
 // Routes
 
@@ -131,51 +131,6 @@ app.get('/user-details', async (req, res) => {
 
 
 
-app.get('/posts', async (req, res) => {
-  try {
-    const posts = await Post.find();
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Create a new post
-app.post('/posts', async (req, res) => {
-  const post = new Post({
-    user: req.body.user,
-    content: req.body.content,
-  });
-
-  try {
-    const newPost = await post.save();
-    res.status(201).json(newPost);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Update a post
-app.put('/posts/:id', async (req, res) => {
-  try {
-    const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(updatedPost);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Delete a post
-app.delete('/posts/:id', async (req, res) => {
-  try {
-    await Post.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Post deleted' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
 
 
 const server = http.createServer(app);

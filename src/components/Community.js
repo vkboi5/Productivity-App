@@ -1,100 +1,139 @@
-import React, { useState, useEffect } from 'react';
-import styles from './Community.module.css'; // Import custom CSS for styling
+import React, { useState, useEffect } from "react";
+import styles from "./Community.module.css";
 
 const Community = () => {
-  const [posts, setPosts] = useState([]);
-  const [newPost, setNewPost] = useState('');
+  const [blogs, setBlogs] = useState([]);
+  const [newBlog, setNewBlog] = useState({ title: "", desc: "", img: "" });
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const userId = localStorage.getItem("authUser") || "Anonymous User";
 
-  // Fetch posts from the server
+  // Load dummy blogs or blogs from localStorage
   useEffect(() => {
-    fetch('http://localhost:5000/posts')
-      .then((response) => response.json())
-      .then((data) => setPosts(data));
+    const savedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    if (savedBlogs.length === 0) {
+      const dummyBlogs = [
+        {
+          _id: "1",
+          title: "Welcome to the Community!",
+          desc: "This is a place to share your thoughts and ideas.",
+          img: "https://via.placeholder.com/300",
+          date: new Date().toISOString(),
+          user: "Admin",
+        },
+        {
+          _id: "2",
+          title: "Stay Productive!",
+          desc: "Share your tips on productivity and time management.",
+          img: "",
+          date: new Date().toISOString(),
+          user: "Admin",
+        },
+      ];
+      setBlogs(dummyBlogs);
+      localStorage.setItem("blogs", JSON.stringify(dummyBlogs));
+    } else {
+      setBlogs(savedBlogs);
+    }
   }, []);
 
-  // Handle adding a new post
-  const handleAddPost = () => {
-    if (newPost.trim()) {
-      fetch('http://localhost:5000/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user: 'You', content: newPost }),
-      })
-        .then((response) => response.json())
-        .then((data) => setPosts([...posts, data]));
+  // Save blogs to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("blogs", JSON.stringify(blogs));
+  }, [blogs]);
 
-      setNewPost('');
+  // Handle adding a new blog
+  const handleAddBlog = () => {
+    if (newBlog.title.trim() && newBlog.desc.trim()) {
+      const newBlogEntry = {
+        ...newBlog,
+        _id: Date.now().toString(),
+        date: new Date().toISOString(),
+        user: userId,
+      };
+      setBlogs([...blogs, newBlogEntry]);
+      setNewBlog({ title: "", desc: "", img: "" });
+      setIsPopupOpen(false);
     }
   };
 
-  // Handle deleting a post
-  const handleDeletePost = (id) => {
-    fetch(`http://localhost:5000/posts/${id}`, {
-      method: 'DELETE',
-    })
-      .then(() => setPosts(posts.filter((post) => post._id !== id)));
+  // Handle deleting a blog
+  const handleDeleteBlog = (id) => {
+    setBlogs(blogs.filter((blog) => blog._id !== id));
   };
 
-  // Handle updating a post
-  const handleUpdatePost = (id, updatedContent) => {
-    fetch(`http://localhost:5000/posts/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ content: updatedContent }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(posts.map((post) => (post._id === id ? data : post)));
-      });
+  // Handle updating a blog
+  const handleUpdateBlog = (id) => {
+    const updatedTitle = prompt("Edit blog title:");
+    const updatedDesc = prompt("Edit blog description:");
+    if (updatedTitle && updatedDesc) {
+      setBlogs(
+        blogs.map((blog) =>
+          blog._id === id ? { ...blog, title: updatedTitle, desc: updatedDesc } : blog
+        )
+      );
+    }
   };
 
   return (
     <div className={styles.communityContainer}>
-      <h1 className={styles.header}>Community</h1>
-      <div className={styles.newPostContainer}>
-        <textarea
-          className={styles.textarea}
-          placeholder="What's on your mind?"
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
-        />
-        <button className={styles.postButton} onClick={handleAddPost}>
-          Post
-        </button>
-      </div>
+      <h1 className={styles.header}>Community Corner</h1>
+      <button className={styles.addPostButton} onClick={() => setIsPopupOpen(true)}>
+        + Create Post
+      </button>
+
+      {isPopupOpen && (
+        <div className={styles.popup}>
+          <div className={styles.popupContent}>
+            <h2 className={styles.popupHeader}>Share Your Thoughts</h2>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Blog Title"
+              value={newBlog.title}
+              onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+            />
+            <textarea
+              className={styles.textarea}
+              placeholder="Blog Description"
+              value={newBlog.desc}
+              onChange={(e) => setNewBlog({ ...newBlog, desc: e.target.value })}
+            />
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Image URL (optional)"
+              value={newBlog.img}
+              onChange={(e) => setNewBlog({ ...newBlog, img: e.target.value })}
+            />
+            <div className={styles.popupActions}>
+              <button className={styles.saveButton} onClick={handleAddBlog}>
+                Post
+              </button>
+              <button className={styles.cancelButton} onClick={() => setIsPopupOpen(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className={styles.postsList}>
-        {posts.map((post) => (
-          <div key={post._id} className={styles.post}>
+        {blogs.map((blog) => (
+          <div key={blog._id} className={styles.post}>
             <div className={styles.postHeader}>
-              <span className={styles.user}>{post.user}</span>
-              <span className={styles.date}>
-                {new Date(post.createdAt).toLocaleString()}
+              <h2 className={styles.postTitle}>{blog.title}</h2>
+              <span className={styles.postUser}>by {blog.user}</span>
+              <span className={styles.postDate}>
+                {new Date(blog.date).toLocaleString()}
               </span>
             </div>
-            <div className={styles.postContent}>
-              <p>{post.content}</p>
-            </div>
+            {blog.img && <img src={blog.img} alt={blog.title} className={styles.postImage} />}
+            <p className={styles.postDescription}>{blog.desc}</p>
             <div className={styles.postActions}>
-              <button
-                className={styles.editButton}
-                onClick={() => {
-                  const updatedContent = prompt('Edit your post:', post.content);
-                  if (updatedContent !== null) {
-                    handleUpdatePost(post._id, updatedContent);
-                  }
-                }}
-              >
+              <button className={styles.editButton} onClick={() => handleUpdateBlog(blog._id)}>
                 Edit
               </button>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDeletePost(post._id)}
-              >
+              <button className={styles.deleteButton} onClick={() => handleDeleteBlog(blog._id)}>
                 Delete
               </button>
             </div>
